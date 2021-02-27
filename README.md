@@ -1,2 +1,3 @@
-# Deep-From-Zero
-Implement popular deep learning algorithms from scratch.
+# Akira's toolkit
+
+Lovely toolkit collection by Akira ><
