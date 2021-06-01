@@ -14,14 +14,16 @@ def selection_sort(alist):
     """
 
     if not alist:
-        return False
+        return []
+    if len(alist) <= 1:
+        return alist
 
     for i in range(len(alist)):
         for j in range(i+1, len(alist)):
             if not helpers.less_than(alist[i], alist[j]):
                 helpers.exch(alist, i, j)
 
-    return True
+    return alist
 
 
 def insertion_sort(alist):
@@ -35,14 +37,14 @@ def insertion_sort(alist):
     """
 
     if not alist:
-        return False
+        return []
 
     for i in range(1, len(alist)):
         for j in (range(i)):
             if helpers.less_than(alist[i], alist[j]):
                 helpers.exch(alist, i, j)
 
-    return True
+    return alist
 
 
 def shell_sort(alist):
@@ -78,7 +80,7 @@ def shell_sort(alist):
     return True
 
 
-print(data.TEST_A)
-shell_sort(data.TEST_A)
-print(data.TEST_A)
+# print(data.TEST_A)
+# shell_sort(data.TEST_A)
+# print(data.TEST_A)
 
