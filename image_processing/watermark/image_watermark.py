@@ -53,7 +53,6 @@ def add_watermark(image_path, mask_path, alpha=0.5):
 
     dst_channels = cv2.split(img)
 
-
     print('Generating: ------' + image_path.split('/')[-1] + '-----')
     for i in range(3):
         dst_channels[i][ul_points[0]: dr_points[0], ul_points[1]: dr_points[1]] = dst_channels[i][
