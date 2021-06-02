@@ -1,6 +1,6 @@
 
-import sorting_algorithm.compare_helpers as helpers
-import sorting_algorithm.testing_data as data
+import sorting_algorithm.basic_helpers as helpers
+import sorting_algorithm.sorting_test as data
 import math
 
 

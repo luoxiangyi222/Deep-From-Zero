@@ -1,30 +1,27 @@
 
-import sorting_algorithm.compare_helpers as helpers
-import sorting_algorithm.testing_data as data
+import sorting_algorithm.basic_helpers as helpers
+import sorting_algorithm.sorting_test as data
 import sorting_algorithm.elementory_sorting as sorting
-import math
 
-
-### merge sort
-
-
-# combining two ordered arrays to make one larger ordered array.
+# Merge sort
+# Combining two ordered arrays to make one larger ordered array.
 # This operation immediately lends itself to a simple recursive sort method known as mergesort:
 # to sort an array, divide it into two halves, sort the two halves (recursively), and then merge the results.
 
 
 def merge_v1(lista, listb):
     """
-    Assume the given lists are sorted already.
+    Assume the given lists were sorted already.
     This version create new list to store result.
-    :param lista:
-    :param listb:
-    :return:
+    :param lista: sorted list
+    :param listb: sorted list
+    :return: sorted list merged from list a and list b
     """
     temp_list = []
 
     ia, ib = 0, 0
 
+    # when two pointers are inside arrays
     while ia < len(lista) and ib < len(listb):
         if helpers.less_than(lista[ia], listb[ib]):
             temp_list.append(lista[ia])
@@ -33,6 +30,7 @@ def merge_v1(lista, listb):
             temp_list.append(listb[ib])
             ib += 1
 
+    # Check if pointers hit the tail of array.
     if ia >= len(lista) and ib < len(listb):
         temp_list.extend(listb[ib:])
     if ib >= len(listb) and ia < len(lista):
@@ -43,12 +41,13 @@ def merge_v1(lista, listb):
 
 def merge_in_place(alist: list, lo: int, mid: int, hi: int):
     """
-
-    :param alist:
-    :param lo:
-    :param mid:
-    :param hi:
-    :return:
+    Assume the given sub lists were sorted.
+    This version merge left and right parts in place.
+    :param alist: list
+    :param lo: low index
+    :param mid: mid index separating left and right part, belongs to left part.
+    :param hi: high index, belongs to right part
+    :return: a whole sorted list
     """
 
     temp_list = alist.copy()
@@ -72,11 +71,12 @@ def merge_in_place(alist: list, lo: int, mid: int, hi: int):
     return alist
 
 
-def merge_sort_top_down(alist):
+def merge_sort_top_down_v1(alist):
     """
-
-    :param alist:
-    :return:
+    Divide and conquer. Top down method for merge sort.
+    Each recursion requires a creation of new array.
+    :param alist: list
+    :return: sorted list.
     """
     if len(alist) <= 1:
         return alist
@@ -85,21 +85,45 @@ def merge_sort_top_down(alist):
     mid_point = int(N / 2)
 
     # sort sub list
+    # insertion sort
     left_list = sorting.insertion_sort(alist[:mid_point])
     right_list = sorting.insertion_sort(alist[mid_point:])
 
     # recursion
-    left_sorted = merge_sort_top_down(left_list)
-    right_sorted = merge_sort_top_down(right_list)
+    left_sorted = merge_sort_top_down_v1(left_list)
+    right_sorted = merge_sort_top_down_v1(right_list)
 
     return merge_v1(left_sorted, right_sorted)
 
 
+def merge_sort_top_down_inplace(alist):
+    """
+    Divide and conquer. Top down method for merge sort.
+    Stave off creating new array and append elements to form result.
+    :param alist: list
+    :return: sorted list
+    """
+    if len(alist) <= 1:
+        return alist
+
+    N = len(alist)
+    mid_point = int(N / 2)
+
+    # sort
+    alist[: mid_point+1] = sorting.insertion_sort(alist[: mid_point+1])
+    alist[mid_point+1:] = sorting.insertion_sort(alist[mid_point+1:])
+
+    # merge
+    merge_in_place(alist, 0, mid_point, N-1)
+
+    return alist
+
+
 def merge_sort_bottom_up(alist):
     """
-
-    :param alist:
-    :return:
+    Bottom up method, start with size 2, following 4, 8, ...
+    :param alist: list
+    :return: sorted list
     """
     N = len(alist)
 
@@ -114,11 +138,7 @@ def merge_sort_bottom_up(alist):
     return alist
 
 
-print(data.TEST_A)
-
-la = [1, 3, 5, 2, 4, 6, 10]
-
-
-print(merge_in_place(la, 0, 2, 6))
-print(merge_sort_top_down(data.TEST_A))
-print(merge_sort_bottom_up(data.TEST_A))
+# testing section
+# print(data.TEST_A)
+# print(merge_sort_top_down_inplace(data.TEST_A))
+# print(merge_sort_bottom_up(data.TEST_A))
